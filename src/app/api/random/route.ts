@@ -86,8 +86,6 @@ export async function POST(request: NextRequest) {
     // Get file from  FormData
     const file: File | null = data.get('file') as unknown as File;
 
-    console.log(file)
-
     // Get max subset from FormData
     const subset: number = parseInt(data.get('subset') as string) || 5;
 

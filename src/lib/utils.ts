@@ -20,9 +20,19 @@ export function csvToJson(csvString: string): WinnerType[] {
     const result: any[] = [];
 
     lines.forEach(line => {
-        const [name, email, accountNumber, phoneNumber] = line.split(',');
-        result.push({ name, email, accountNumber, phoneNumber });
+        const [name, email, accountNumber, phoneNumber, branchName] = line.split(',');
+        result.push({ name, email, accountNumber, phoneNumber, branchName });
     });
 
     return result;
+}
+
+export function maskAccountNumber(accountNumber: string) {
+    // Ensure the input is a string
+    accountNumber = accountNumber.toString();
+
+    // Replace the middle digits with 'xxxx'
+    let maskedNumber = accountNumber.slice(0, 3) + 'xxxx' + accountNumber.slice(-3);
+
+    return maskedNumber;
 }

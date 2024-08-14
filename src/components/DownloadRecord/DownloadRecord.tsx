@@ -1,3 +1,4 @@
+'use client'
 import { WinnerType } from '@/lib/definitions';
 import * as XLSX from 'xlsx';
 
@@ -8,6 +9,10 @@ type DownloadRecordProp = {
 }
 
 const DownloadRecord: React.FunctionComponent<DownloadRecordProp> = ({ records, category, title }) => {
+
+    console.log(records);
+    console.log(category);
+    console.log(title);
 
     const handleDownload = () => {
         if (!records) {

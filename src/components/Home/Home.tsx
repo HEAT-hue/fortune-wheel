@@ -3,10 +3,11 @@ import { CSVSVG, GearSVG, ThrashSVG, UploadSVG } from "@/components/svgs";
 import { CSVFileype, WinnerType } from "@/lib/definitions";
 import { csvToJson } from "@/lib/utils";
 import { Modal } from "antd";
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 // import ErrorImg from "../../../../../public/images/error.webp";
 import Image from "next/image";
 import { Select } from 'antd';
+
 // import { Kalam } from "next/font/google";
 
 // Configure the Kalam font
@@ -16,7 +17,7 @@ import { Select } from 'antd';
 // });
 
 type HomePageProps = {
-    setRandomRecord: Dispatch<SetStateAction<WinnerType[] | null>>
+    setRandomRecord: Dispatch<SetStateAction<WinnerType[]>>
     setViewIndex: Dispatch<SetStateAction<number>>
     title: string
     setTitle: Dispatch<SetStateAction<string>>
@@ -24,7 +25,7 @@ type HomePageProps = {
     setCategory: Dispatch<SetStateAction<string>>
 }
 
-const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, setViewIndex, title, setTitle }) => {
+const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, setViewIndex, title, setTitle, setCategory }) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +33,16 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
     const [file, setFile] = useState<File | null>(null);
     const [err, setErr] = useState<string | null>(null);
     const [winnersCount, setWinnersCount] = useState<string>("1");
+    const [loading, setLoading] = useState<boolean>(false);
+
+    // Clean resources
+    useEffect(() => {
+        return () => {
+            setFile(null);
+            setErr(null);
+            setWinnersCount("1");
+        }
+    }, [])
 
     // Button to accept file
     const handleClick = () => {
@@ -92,6 +103,9 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
         const formData = new FormData();
         formData.append('file', file);
         formData.append('subset', winnersCount.toString());
+
+        setLoading(true);
+
 
         // Upload form
         const response = await fetch('/api/random', {
@@ -155,13 +169,12 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
                     className="flex items-center justify-center bg-[#004773] border border-transparent rounded-sm shadow-sm text-[#E5E5E5] cursor-pointer tracking-widest font-medium text-2xl leading-snug px-3 py-3 relative no-underline transition-all duration-250 select-none touch-action-manipulation align-baseline w-[20rem] h-[4rem] hover:bg-[#004773]/80 hover:shadow-lg hover:-translate-y-1 focus:bg-[#0073a1] focus:shadow-lg active:bg-[#004a5e] active:shadow-sm active:translate-y-0 opacity-95" role="button"
                     onClick={showModal}
                 >
-                    <span className={"font-Killam-Bold"}>Generate</span>
+                    <span className={"font-Killam-Bold"}>Start</span>
                 </button>
             </main>
 
             {/* Modal to Upload CSV File */}
-            <Modal title={<>Data</>} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-
+            <Modal title={<>Data</>} open={isModalOpen} className="z-[]" onOk={handleOk} onCancel={handleCancel}>
                 <div className="flex flex-col gap-y-4">
                     {/* Category */}
                     <div className="flex flex-col gap-y-2">
@@ -170,7 +183,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
                             placeholder="Select Category"
                             style={{ width: "100%", height: 45 }}
                             onChange={(e) => {
-                                setTitle(e);
+                                setCategory(e);
                             }}
                             options={[
                                 { value: 'Monthly Draw', label: 'Monthly Draw' },

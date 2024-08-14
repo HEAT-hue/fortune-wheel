@@ -1,5 +1,4 @@
 'use client'
-
 import ConfettiEffect from "@/components/ConfettiEffect";
 import Header from "@/components/Header";
 import { WinnerType } from "@/lib/definitions";
@@ -20,7 +19,7 @@ export default function Home() {
     const [category, setCategory] = useState<string>("");
 
     // Data of selected records
-    const [randomRecord, setRandomRecord] = useState<WinnerType[] | null>(null);
+    const [randomRecord, setRandomRecord] = useState<WinnerType[]>([]);
 
     // Handle display of confetti
     const [showConfetti, setShowConfetti] = useState<boolean>(false);
@@ -38,14 +37,14 @@ export default function Home() {
                 {/* React Confetti */}
                 {
                     showConfetti && (
-                        <div className='z-[1000] absolute inset-0'><ConfettiEffect /></div>
+                        <div className='z-[100] absolute inset-0'><ConfettiEffect /></div>
                     )
                 }
 
                 {/* Page header */}
-                <Header />
+                <Header setViewIndex={setViewIndex} />
 
-                <main className="h-screen relative overflow-hidden flex flex-col justify-center items-center">
+                <main className="h-screen relative overflow-hidden flex flex-col justify-center items-center border border-red-800">
                     {/* Rotating background image */}
                     {viewIndex != 2 && (
                         <div className="absolute inset-0 z-[20] rotating-background bg-[url('/images/bg_skin.png')] bg-contain bg-center bg-no-repeat"></div>
@@ -53,9 +52,11 @@ export default function Home() {
                     <div className="absolute inset-0 bg-[#046FC0]"></div>
 
                     {/* Hero text */}
-                    <div className="absolute top-3 z-[24] inset-x-0 flex justify-center mt-[3rem]">
-                        <Image src="/images/rewards_text.png" width={356} height={260} alt="Join the millionaire geng" />
-                    </div>
+                    {viewIndex != 2 && (
+                        <div className="absolute top-0 z-[24] inset-x-0 flex justify-center mt-[3rem]">
+                            <Image src="/images/rewards_text.png" width={356} height={260} alt="Join the millionaire geng" />
+                        </div>
+                    )}
 
                     {/* Raffle Text */}
                     {viewIndex != 2 && (
@@ -64,7 +65,7 @@ export default function Home() {
                         </div>
                     )}
 
-                    <div className="absolute top-[60vh] z-[100]">
+                    <div className={`absolute ${viewIndex != 2 ? "top-[60vh]" : "top-[5vh]"} bottom-0 z-[200]`}>
                         {
                             views[viewIndex]
                         }
