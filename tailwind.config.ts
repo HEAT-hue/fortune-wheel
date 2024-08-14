@@ -13,6 +13,19 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        "Inter-Thin": ["Inter-Thin"],
+        "Inter-Extralight": ["Inter-Extralight"],
+        "Inter-Light": ["Inter-Light"],
+        "Inter-Regular": ["Inter-Regular"],
+        "Inter-Medium": ["Inter-Medium"],
+        "Inter-Bold": ["Inter-Bold"],
+        "Killam-Bold": ["Killam-Bold"],
+        "Inter-Extrabold": ["Inter-Extrabold"],
+        "Inter-Black": ["Inter-Black"],
+        "Aladin-Regular": ["Aladin-Regular"],
+        "ABeeZee-Regular": ["ABeeZee-Regular"],
+      }
     },
   },
   plugins: [],
