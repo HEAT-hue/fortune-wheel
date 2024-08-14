@@ -108,7 +108,6 @@ export async function POST(request: NextRequest) {
     try {
         fs.writeFileSync(filePath, buffer);
     } catch (err: any) {
-        console.log("error writing file")
         return (NextResponse.json({ err: "Error writing files" }, { status: 500 }));
     }
 
@@ -124,13 +123,12 @@ export async function POST(request: NextRequest) {
 
         let randomRecords = await getRecordsSubset(randomIndexes, filePath);
 
-
         // Clean up temporary file
-        try {
-            fs.unlinkSync(filePath);
-        } catch (err) {
-            console.error("Error cleaning up file:", err);
-        }
+        // try {
+        //     fs.unlinkSync(filePath);
+        // } catch (err) {
+        //     console.error("Error cleaning up file:", err);
+        // }
 
         return (NextResponse.json(randomRecords, { status: 200 }));
     } catch (error) {
