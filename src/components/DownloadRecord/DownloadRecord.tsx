@@ -10,10 +10,6 @@ type DownloadRecordProp = {
 
 const DownloadRecord: React.FunctionComponent<DownloadRecordProp> = ({ records, category, title }) => {
 
-    console.log(records);
-    console.log(category);
-    console.log(title);
-
     const handleDownload = () => {
         if (!records) {
             return;

@@ -41,6 +41,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
             setFile(null);
             setErr(null);
             setWinnersCount("1");
+            setLoading(false);
         }
     }, [])
 
@@ -174,7 +175,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
             </main>
 
             {/* Modal to Upload CSV File */}
-            <Modal title={<>Data</>} open={isModalOpen} className="z-[]" onOk={handleOk} onCancel={handleCancel}>
+            <Modal title={<>Data</>} open={isModalOpen} className="z-[]" loading={loading} onOk={handleOk} onCancel={handleCancel}>
                 <div className="flex flex-col gap-y-4">
                     {/* Category */}
                     <div className="flex flex-col gap-y-2">

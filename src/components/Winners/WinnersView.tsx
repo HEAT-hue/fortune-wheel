@@ -15,10 +15,6 @@ type WinnrsViewType = {
 }
 
 const WinnersView: React.FC<WinnrsViewType> = ({ randomRecord, title, category, setShowConfetti }) => {
-
-    console.log(randomRecord);
-
-    console.log(category)
     const [open, setOpen] = useState(true);
     const [loading, setLoading] = useState(false);
 
@@ -49,7 +45,7 @@ const WinnersView: React.FC<WinnrsViewType> = ({ randomRecord, title, category, 
         <div className="relative w-full h-full">
             <h1 className='text-[#FABA02] text-3xl mb-2'>{`${category} Category`}</h1>
             <h1 className='text-white text-lg font-extrabold text'>Congratulations {" "}<span className='text-sec font-bold'>{title}</span> {" "} winners!</h1>
-            <div id="largegenerictable" className="flex flex-col gap-2 text-[16px] mt-3 h-[80vh] overflow-y-auto">
+            <div id="largegenerictable" className="flex flex-col gap-2 text-[16px] mt-3 h-[70vh] overflow-y-auto">
                 <table className="w-full border-separate border-spacing-y-4 pb-[5rem]">
                     <thead className="">
                         <tr id="header" className="text-white pb-20">
