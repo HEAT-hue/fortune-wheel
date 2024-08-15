@@ -9,10 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.1",
+    "antd": "^5.20.1",
     "fortune-wheel": "file:",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-confetti": "^6.1.0",
+    "react-dom": "^18",
+    "react-spinners": "^0.14.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^20",
