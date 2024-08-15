@@ -247,7 +247,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
                             )}
 
                             <div className="mt-5 flex flex-col gap-y-1 w-max">
-                                <p>Random Count</p>
+                                <p>Random Winners</p>
 
                                 {/* Random winners selection */}
                                 {/* Capture Quantity Input from User */}
