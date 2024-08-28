@@ -25,7 +25,7 @@ const ProcessingView: React.FunctionComponent<ProcessingViewType> = ({ setViewIn
                 setDisplayAccts(true);
                 setViewIndex(2)
             },
-            10000, // every 3 seconds
+            15000, // every 10 seconds
         );
         return () => clearTimeout(intervalId);
     }, []);

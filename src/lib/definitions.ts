@@ -26,8 +26,13 @@ export type ErrorResponse = {
     errorTime: Date
 }
 
-
 export type APIResponse<T> = {
     status: boolean,
     data: T | ErrorResponse | string | any
 }
+
+export type AuthResponse = {
+    email: string
+};
+
+export type Session = AuthResponse & { SESSION_EXPIRY: number };

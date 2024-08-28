@@ -175,7 +175,7 @@ const HomePage: React.FunctionComponent<HomePageProps> = ({ setRandomRecord, set
             </main>
 
             {/* Modal to Upload CSV File */}
-            <Modal title={<>Data</>} open={isModalOpen} className="z-[]" loading={loading} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title={<>Super Rewards</>} open={isModalOpen} className="z-[]" loading={loading} onOk={handleOk} onCancel={handleCancel}>
                 <div className="flex flex-col gap-y-4">
                     {/* Category */}
                     <div className="flex flex-col gap-y-2">
