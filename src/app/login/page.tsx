@@ -52,7 +52,7 @@ const Login: React.FC = () => {
         setErrorMessage("");
 
         if (!email || !password) {
-            setErrorMessage("Incomplete credentials");
+            setErrorMessage("Incomplete credentials!");
             setSubmissionPending(false);
             return;
         }
