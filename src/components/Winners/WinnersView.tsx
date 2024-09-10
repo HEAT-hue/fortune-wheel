@@ -1,11 +1,8 @@
 'use client'
 import { WinnerType } from '@/lib/definitions';
-import { Modal } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import DownloadRecord from '../DownloadRecord/DownloadRecord';
 import { maskAccountNumber } from '@/lib/utils';
-// import './custom-modal.css';
-
+import * as XLSX from 'xlsx';
 
 type WinnrsViewType = {
     randomRecord: WinnerType[]
@@ -15,8 +12,7 @@ type WinnrsViewType = {
 }
 
 const WinnersView: React.FC<WinnrsViewType> = ({ randomRecord, title, category, setShowConfetti }) => {
-    const [open, setOpen] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [downloaded, setDownloaded] = useState<boolean>(false);
 
     useEffect(() => {
         setShowConfetti(true);
@@ -26,20 +22,66 @@ const WinnersView: React.FC<WinnrsViewType> = ({ randomRecord, title, category, 
         }
     }, [])
 
-    const showLoading = () => {
-        setOpen(true);
-        setLoading(true);
+    useEffect(() => {
+        if (downloaded) {
+            return;
+        }
 
-        // Simple loading mock. You should add cleanup logic in real world.
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    };
+        // Convert JSON data to a worksheet
+        const worksheet = XLSX.utils.json_to_sheet(randomRecord);
 
-    // Reload page
-    function reloadPage() {
-        window.location.reload();
-    }
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Append the worksheet to the workbook
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // Generate a binary string from the workbook
+        const workbookOut = XLSX.write(workbook, {
+            bookType: 'xlsx',
+            type: 'binary',
+        });
+
+        // Convert binary string to array buffer
+        const s2ab = (s: any) => {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xff;
+            }
+            return buf;
+        };
+
+        // Create a blob from the array buffer
+        const blob = new Blob([s2ab(workbookOut)], { type: 'application/octet-stream' });
+
+        // Create a link element
+        const link = document.createElement('a');
+
+        // URL
+        const url = URL.createObjectURL(blob);
+
+        // Set the URL to the blob
+        link.href = url
+
+        // Set the download attribute to the desired file name
+        link.download = `${title} ${category}.xlsx`;
+
+        // Append the link to the document body
+        document.body.appendChild(link);
+
+        // Trigger the download by clicking the link
+        link.click();
+
+        // Clean up and remove the link
+        document.body.removeChild(link);
+
+        // Revoke object URL
+        URL.revokeObjectURL(url);
+
+        setDownloaded(true);
+    }, [])
+
 
     return (
         <div className="relative w-full h-full">
@@ -92,43 +134,9 @@ const WinnersView: React.FC<WinnrsViewType> = ({ randomRecord, title, category, 
                     </tbody>
                 </table>
             </div >
-            <div className='w-max ml-auto gap-x-2 mt-2 mr-3'>
+            {/* <div className='w-max ml-auto gap-x-2 mt-2 mr-3'>
                 <DownloadRecord records={randomRecord} title={title} category={category} />
-            </div>
-            {/* <Modal
-                title={
-                    <p className="text-xl font-bold">
-                        <span className={"font-ABeeZee-Regular"}>Congratulations! {title}</span>
-
-                    </p>
-                }
-                footer={
-                    <div className='flex gap-x-2 mt-9'>
-                        <DownloadRecord records={randomRecord} title={title} category={category} />
-                        <button className='border border-pry text-pry p-2 rounded text-sm' onClick={reloadPage}>
-                            Close
-                        </button>
-                    </div>
-                }
-                loading={loading}
-                open={open}
-                onCancel={() => setOpen(true)}
-                className="custom-ant-modal"
-            >
-                <div className='grid grid-cols-3 gap-2'>
-                    {randomRecord?.map((winner: any, index: number) => {
-                        const { name, email, accountNumber, phoneNumber } = winner
-                        return (
-                            <div key={index} className='pt-2 mt-1'>
-                                <div className='text sm:text-lg font-bold text-gray-500'>
-                                    <span className={"font-ABeeZee-Regular"}>{name ?? "Unknown Names"}</span>
-                                </div>
-                                <div>{accountNumber ?? "Unknown Account number"}</div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </Modal> */}
+            </div> */}
         </div>
     )
 }

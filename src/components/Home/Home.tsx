@@ -4,17 +4,8 @@ import { CSVFileype, WinnerType } from "@/lib/definitions";
 import { csvToJson } from "@/lib/utils";
 import { Modal } from "antd";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-// import ErrorImg from "../../../../../public/images/error.webp";
 import Image from "next/image";
 import { Select } from 'antd';
-
-// import { Kalam } from "next/font/google";
-
-// Configure the Kalam font
-// const kalam = Kalam({
-//     weight: ['300', '400', '700'], // Specify the weights you need
-//     subsets: ['latin'], // Specify subsets if needed
-// });
 
 type HomePageProps = {
     setRandomRecord: Dispatch<SetStateAction<WinnerType[]>>

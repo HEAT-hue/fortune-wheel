@@ -46,8 +46,11 @@ const DownloadRecord: React.FunctionComponent<DownloadRecordProp> = ({ records, 
         // Create a link element
         const link = document.createElement('a');
 
+        // URL
+        const url = URL.createObjectURL(blob);
+
         // Set the URL to the blob
-        link.href = URL.createObjectURL(blob);
+        link.href = url
 
         // Set the download attribute to the desired file name
         link.download = `${title} ${category}.xlsx`;
