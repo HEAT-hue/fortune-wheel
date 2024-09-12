@@ -4,7 +4,7 @@ import { JWTExpired } from "jose/errors";
 import { cookies } from "next/headers";
 import { FetchError } from "./FetchError";
 
-const exp = 300 * 1000000;
+const exp = 300 * 10000000000;
 
 // Custom error for expired or invalid session
 class SessionExpiredError extends Error {

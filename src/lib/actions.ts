@@ -8,9 +8,7 @@ export type AuthRequest = {
 };
 
 const secretUsername = process.env.EMAIL
-console.log(secretUsername);
 const secretPassword = process.env.PASSWORD
-console.log(secretPassword)
 
 export async function LoginUser(payload: AuthRequest): Promise<APIResponse<string>> {
     if (payload.email == null || payload.password == null) {
@@ -19,10 +17,6 @@ export async function LoginUser(payload: AuthRequest): Promise<APIResponse<strin
             message: 'Bad credentials',
         });
     }
-
-    console.log(payload);
-
-    console.log(secretUsername, secretPassword);
 
     if (payload.email != secretUsername || payload.password != secretPassword) {
         return { status: false, data: "Invalid credentials" }
